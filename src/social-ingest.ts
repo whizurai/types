@@ -1,6 +1,6 @@
 /**
  * Social Ingest Types
- * 
+ *
  * Shared types for social scraping and processing.
  */
 
@@ -63,7 +63,8 @@ export interface SocialScrapeQuery {
 
 export interface CreateSocialScrapeJobRequest {
   tenantId: string;
-  appId?: string;
+  /** Application identifier (required for multi-app support) */
+  appId: string;
   platform: SocialScrapePlatform;
   query: SocialScrapeQuery;
   options?: SocialScrapeOptions;
@@ -164,6 +165,8 @@ export interface SocialInsightArtifactResponse {
 export interface SocialScrapeRequestedEvent {
   jobId: string;
   tenantId: string;
+  /** Application identifier (required for multi-app support) */
+  appId: string;
   platform: SocialScrapePlatform;
   query: SocialScrapeQuery;
   options?: SocialScrapeOptions;
@@ -175,6 +178,8 @@ export interface SocialScrapeRequestedEvent {
 export interface SocialScrapeItemStoredEvent {
   jobId: string;
   tenantId: string;
+  /** Application identifier (required for multi-app support) */
+  appId: string;
   itemId: string;
   platform: SocialScrapePlatform;
   sourceUrl: string;
@@ -185,6 +190,8 @@ export interface SocialScrapeItemStoredEvent {
 export interface SocialScrapeCompletedEvent {
   jobId: string;
   tenantId: string;
+  /** Application identifier (required for multi-app support) */
+  appId: string;
   platform: SocialScrapePlatform;
   countsStored: number;
   completedAt: string;
@@ -193,6 +200,8 @@ export interface SocialScrapeCompletedEvent {
 export interface SocialScrapeFailedEvent {
   jobId: string;
   tenantId: string;
+  /** Application identifier (required for multi-app support) */
+  appId: string;
   platform: SocialScrapePlatform;
   errorMessage: string;
   failedAt: string;
