@@ -1,0 +1,11 @@
+{
+  "_comment": "Grandfathered violations from before the boundary check was introduced. DO NOT add new entries to make a failing CI pass — fix the violation instead. To remove an entry, eliminate the violation from the source and delete the corresponding line here.",
+  "_documented_in": "https://github.com/guzzyworld/guzzy-world-payload/blob/main/docs/architecture/never-build.md",
+  "exemptions": [
+    "reserved:src/trends.ts:58:dramatic",
+    "reserved:src/trends.ts:59:playful",
+    "reserved:src/trends.ts:65:cozy",
+    "reserved:src/trends.ts:71:dramatic",
+    "reserved:src/trends.ts:119:beat"
+  ]
+}
