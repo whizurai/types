@@ -1,0 +1,26 @@
+name: Boundary checks
+
+# Enforces the platform↔product seam:
+#  - product nouns ("motif", "beat", "arc", "vibe", "pet", etc.) must never
+#    appear in @whizurai/types contracts
+#  - this package must only depend on zod + node builtins
+#
+# See docs:
+#   https://github.com/guzzyworld/guzzy-world-payload/blob/main/docs/architecture/never-build.md
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  boundary:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Run boundary checks
+        run: node scripts/check-boundary.mjs
