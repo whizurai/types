@@ -6,6 +6,7 @@
 
 export * from './social-ingest';
 export * from './trends';
+export * from './run-presentation';
 
 // Capability types
 export * as Capabilities from './capabilities';
