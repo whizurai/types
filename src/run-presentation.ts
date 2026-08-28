@@ -108,6 +108,15 @@ export interface RunPresentation {
    * `none` — there was nothing to present.
    */
   source: 'declared' | 'inferred' | 'none';
+  /**
+   * The run's customer-facing name, taken verbatim from the capability's
+   * `name`.
+   *
+   * ABSENT when the run has no capability. A workflow-only run has no human
+   * name anywhere, and formatting `workflowSlug` would substitute a guess for a
+   * fact — fall back to the slug instead.
+   */
+  title?: string;
   primary: PresentedOutput | null;
   secondary: PresentedOutput[];
   /** Outputs declared with role=debug. Inspection surface only. */
