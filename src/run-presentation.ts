@@ -90,7 +90,14 @@ export interface PresentedInput {
 export interface PresentedAction {
   id: PresentedActionId;
   label: string;
-  /** Which output this acts on. Absent for run-level actions. */
+  /**
+   * Which output this acts on. Absent for run-level actions such as `reuse`.
+   *
+   * Load-bearing for a `collection` primary, which has no address of its own:
+   * media actions and continuations are emitted once per MEMBER (`images[0]`,
+   * `images[1]`, …). Act on the output this names, not on
+   * `presentation.primary`, or a gallery hands the user the wrong file.
+   */
   outputKey?: string;
   primary?: boolean;
   /** `continuation` only: the capability that would consume this result. */
