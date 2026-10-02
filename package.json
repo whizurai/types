@@ -1,6 +1,6 @@
 {
   "name": "@whizurai/types",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "TypeScript type definitions for Whizurai Platform APIs",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,6 +9,11 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.js"
+    },
+    "./inference": {
+      "types": "./dist/inference.d.ts",
+      "import": "./dist/inference.js",
+      "require": "./dist/inference.js"
     },
     "./capabilities": {
       "types": "./dist/capabilities/index.d.ts",
