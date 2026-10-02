@@ -36,6 +36,11 @@ import { RECOMMENDED_EMBEDDING_MODEL } from '@whizurai/types/inference';
   identical. A missing space is not a wildcard. The SDKs ship
   `assertSameEmbeddingSpace` / `assert_same_embedding_space` to enforce this.
 - Limits: `EMBEDDINGS_MAX_INPUTS` (128), `RERANK_MAX_DOCUMENTS` (64).
+- Retrieval queries must be sent with `input_type: "query"`; indexed passages
+  use `"document"` (the default). Qwen3-Embedding applies its instruction only
+  to queries.
+- `usage` and `whizai.worker` may be `null`; `whizai.attributable` is present on
+  both embeddings and rerank provenance.
 
 ## Documentation
 

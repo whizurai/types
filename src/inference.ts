@@ -2,7 +2,8 @@
  * Direct inference: embeddings and rerank.
  *
  * Wire shapes for the model-router public endpoints `POST /v1/embeddings` and
- * `POST /v1/rerank`. Field names are kept exactly as they appear on the wire
+ * `POST /v1/rerank`. These are served by model-router directly
+ * (e.g. `https://model-router.<env>.whizur.ai`), not by the api-gateway. Field names are kept exactly as they appear on the wire
  * (snake_case) so these types can be used to type raw responses.
  *
  * Provenance (`whizai`) is optional everywhere: older, non-fleet embedding
@@ -57,14 +58,16 @@ export interface InferenceProvenance {
   runtime?: string;
   /** Where it executed (e.g. `local`, `cloud`). */
   execution?: string;
-  /** Worker identity, when known. */
-  worker?: InferenceWorker;
+  /** Worker identity, or `null`/absent when not attributable. */
+  worker?: InferenceWorker | null;
   /** Resolved model id (the alias target, not the alias). */
   model?: string;
   /** Exact model revision, or `null` when the runtime cannot report one. */
   model_revision?: string | null;
   /** Prompt/instruction contract the server applied (e.g. `qwen3-embed-instruct-v1`). */
   prompt_contract?: string;
+  /** `false` when the gateway could not establish which worker/model served the request. */
+  attributable?: boolean;
 }
 
 // =============================================================================
@@ -79,7 +82,10 @@ export interface EmbeddingsRequest {
   model: string;
   /** One string or up to {@link EMBEDDINGS_MAX_INPUTS} strings. */
   input: string | string[];
-  /** Default `document`. Instruction-tuned models embed queries differently. */
+  /**
+   * `query` for retrieval queries, `document` (default) for indexed passages.
+   * Qwen3-Embedding applies its retrieval instruction only to `query` inputs.
+   */
   input_type?: EmbeddingInputType;
   /** Optional task instruction (only applied to `query` inputs by instruct models). */
   instruction?: string;
@@ -106,15 +112,13 @@ export interface EmbeddingProvenance extends InferenceProvenance {
    * identical. Absent on older, non-fleet models.
    */
   embedding_space?: string;
-  /** `false` when the gateway could not establish which worker/model served the request. */
-  attributable?: boolean;
 }
 
 export interface EmbeddingsResponse {
   object: 'list';
   data: EmbeddingData[];
   model: string;
-  usage?: InferenceUsage;
+  usage?: InferenceUsage | null;
   whizai?: EmbeddingProvenance;
 }
 
@@ -140,6 +144,7 @@ export interface RerankResult {
   relevance_score: number;
 }
 
+/** Rerank provenance (includes `attributable`). */
 export type RerankProvenance = InferenceProvenance;
 
 export interface RerankResponse {
@@ -147,6 +152,6 @@ export interface RerankResponse {
   model: string;
   /** Sorted by `relevance_score`, descending. */
   results: RerankResult[];
-  usage?: InferenceUsage;
+  usage?: InferenceUsage | null;
   whizai?: RerankProvenance;
 }
