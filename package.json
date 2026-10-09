@@ -1,6 +1,6 @@
 {
   "name": "@whizurai/types",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "TypeScript type definitions for Whizurai Platform APIs",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
