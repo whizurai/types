@@ -9,3 +9,4 @@
 // Types
 export * from './contextual-rerank';
 export * from './video-multi-shot';
+export * from './speech-synthesize';
