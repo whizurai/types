@@ -8,4 +8,5 @@
 
 // Types
 export * from './contextual-rerank';
+export * from './image-segment';
 export * from './video-multi-shot';
