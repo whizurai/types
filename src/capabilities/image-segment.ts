@@ -37,7 +37,11 @@ export type ImageSegmentPriority = 'production' | 'batch' | 'backfill';
 export interface ImageSegmentInput {
   engine: ImageSegmentEngine;
 
-  /** An http(s) URL the platform copies into its own storage. Private hosts are refused. */
+  /**
+   * An http(s) URL the platform copies into its own storage. Only send URLs you own or trust, and
+   * prefer `imageArtifactId` for user-supplied images: the copy is made by the platform's file-store,
+   * and private hosts are refused only when the gateway runs its strict URL policy.
+   */
   imageUrl?: string;
 
   /** An image artifact owned by the calling app. */
@@ -74,7 +78,7 @@ export interface ImageSegmentFile {
   sizeBytes: number;
   /** Lowercase hex SHA-256 of the file. */
   sha256: string;
-  /** The source image's size after EXIF orientation. */
+  /** The source image's size after EXIF orientation, as reported by the executing worker. */
   width: number;
   height: number;
 }
@@ -134,9 +138,10 @@ export interface ImageSegmentResult extends ImageSegmentFile {
  * Codes after the `segmentation/` prefix in a failed run's `errorMessage`
  * (`segmentation/<code>: <message>`). The first group means the REQUEST is
  * wrong; retrying it unchanged cannot help. The second is capacity or a
- * transient fault: retry with the same idempotency key. The platform's own
- * `retryable` flag on the error is the authority; this union is for switch
- * statements, not a promise that no other code appears.
+ * transient fault: retry as a NEW request with a NEW idempotency key, because
+ * an idempotency key replays the job it already has, including a failed one.
+ * The platform's own `retryable` flag on the error is the authority; this
+ * union is for switch statements, not a promise that no other code appears.
  */
 export type ImageSegmentErrorCode =
   // The request is wrong: do not retry unchanged.
@@ -147,9 +152,10 @@ export type ImageSegmentErrorCode =
   | 'no_instances'
   | 'feature_disabled'
   | 'engine_mismatch'
-  // Capacity or transient: retry with the same idempotency key.
+  // Capacity or transient: retry as a new request (new idempotency key).
   | 'busy'
   | 'engine_failed'
+  | 'engine_timeout'
   | 'no_capable_model'
   | 'no_worker_claimed'
   | 'execution_timeout'
