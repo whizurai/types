@@ -42,6 +42,28 @@ import { RECOMMENDED_EMBEDDING_MODEL } from '@whizurai/types/inference';
 - `usage` and `whizai.worker` may be `null`; `whizai.attributable` is present on
   both embeddings and rerank provenance.
 
+## Audio transcription
+
+Wire types for `POST /v1/audio/transcriptions` (model-router) are in the same
+module: `AudioTranscriptionRequest` (exactly one of `file`, `file_url`,
+`artifact_id`), `AudioTranscriptionResponse` (`text`, `language`, `duration`,
+`segments`, `provider`, `model`, `request_id`), `AudioTranscriptionPending`
+(the `202 { jobId, state }` answer when `metadata.idempotencyKey` is set),
+`TranscriptionSegment` and `TranscriptionResponseFormat`. There is no `whizai`
+block: attribution is `provider` and `model`.
+
+## Speech synthesis
+
+`@whizurai/types/capabilities` exports the `speech:synthesize@v1` shapes
+(`SPEECH_SYNTHESIZE`, `SpeechSynthesizeInput`, `SpeechSynthesizeResult`,
+`SpeechEngine`). Engines: `kokoro` (preset `voice`, `speed`), `chatterbox`
+(optional `referenceAudioArtifactId`, `exaggeration`, `cfgWeight`) and
+`qwen3-tts` (`referenceAudioArtifactId` **and** `referenceText` required; no
+other engine option). The platform refuses an option the engine does not take
+(`invalid_option`). The result reports `referenceAudioSha256` /
+`referenceTextSha256` for the reference the worker actually used (`null` when
+none; never `null` for `qwen3-tts`).
+
 ## Documentation
 
 See [Whizurai Documentation](https://github.com/whizurai/docs) for full API reference.
