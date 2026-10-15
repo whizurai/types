@@ -8,7 +8,7 @@ export * from './social-ingest';
 export * from './trends';
 export * from './run-presentation';
 
-// Direct inference (POST /v1/embeddings, POST /v1/rerank)
+// Direct inference (POST /v1/embeddings, POST /v1/rerank, POST /v1/audio/transcriptions)
 export * from './inference';
 
 // Capability types
