@@ -16,6 +16,24 @@ import { SocialScrapePlatform, SocialScrapeJobStatus } from '@whizurai/types';
 const platform: SocialScrapePlatform = SocialScrapePlatform.TIKTOK;
 ```
 
+## Text generation and image description (gateway)
+
+Wire types for the api-gateway's synchronous `POST /v1/generate/text` and
+`POST /v1/images/describe` live in `@whizurai/types/gateway-inference` (also
+re-exported from the root). Unlike the model-router endpoints below, these go
+through the gateway, which takes the app from the API key and applies its fleet
+policy.
+
+```typescript
+import type { GenerateTextRequest, DescribeImageRequest, PriorityClass } from '@whizurai/types';
+```
+
+- `metadata` carries scheduling only (`priority`, `timeoutMs`, `idempotencyKey`,
+  `executionPolicy`); identity fields are dropped by the gateway.
+- `DescribeImageRequest` takes exactly one of `image` (base64) or `imageUrl`;
+  `model` names an exact model, and omitted runs the platform's `vision` alias.
+- Read the served model from the response (`model`), never from the request.
+
 ## Embeddings and rerank
 
 Wire types for `POST /v1/embeddings` and `POST /v1/rerank` live in
