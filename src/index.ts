@@ -11,6 +11,9 @@ export * from './run-presentation';
 // Direct inference (POST /v1/embeddings, POST /v1/rerank, POST /v1/audio/transcriptions)
 export * from './inference';
 
+// Gateway inference (POST /v1/generate/text, POST /v1/images/describe)
+export * from './gateway-inference';
+
 // Capability types
 export * as Capabilities from './capabilities';
 export * from './capabilities/contextual-rerank';
