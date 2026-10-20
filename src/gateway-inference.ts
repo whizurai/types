@@ -32,8 +32,11 @@ export type PriorityClass = 'interactive' | 'production' | 'batch' | 'backfill';
  */
 export type ExecutionPolicy = 'fleet-required' | 'fleet-preferred' | 'fleet-disabled';
 
-/** Thinking control. `none` turns reasoning off on a thinking model (GLM-5.3). */
-export type ReasoningEffort = 'none' | 'low' | 'medium' | 'high';
+/**
+ * Thinking control the gateway accepts. `none` turns reasoning off on a
+ * thinking model (GLM-5.3).
+ */
+export type GatewayReasoningEffort = 'none' | 'low' | 'medium' | 'high';
 
 /**
  * Request metadata the gateway forwards. Any other key, including app or
@@ -62,7 +65,7 @@ export interface GenerateTextRequest {
   maxTokens?: number;
   temperature?: number;
   systemPrompt?: string;
-  reasoningEffort?: ReasoningEffort;
+  reasoningEffort?: GatewayReasoningEffort;
   metadata?: GatewayRequestMetadata;
 }
 
