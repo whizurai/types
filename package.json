@@ -1,6 +1,6 @@
 {
   "name": "@whizurai/types",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "TypeScript type definitions for Whizurai Platform APIs",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -19,6 +19,11 @@
       "types": "./dist/gateway-inference.d.ts",
       "import": "./dist/gateway-inference.js",
       "require": "./dist/gateway-inference.js"
+    },
+    "./video-routes": {
+      "types": "./dist/video-routes.d.ts",
+      "import": "./dist/video-routes.js",
+      "require": "./dist/video-routes.js"
     },
     "./capabilities": {
       "types": "./dist/capabilities/index.d.ts",

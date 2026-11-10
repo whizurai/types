@@ -16,6 +16,14 @@ import { SocialScrapePlatform, SocialScrapeJobStatus } from '@whizurai/types';
 const platform: SocialScrapePlatform = SocialScrapePlatform.TIKTOK;
 ```
 
+## Video route table
+
+`GET /v1/model-router/video-routes` returns a `VideoRouteTable`
+(`@whizurai/types/video-routes`, also re-exported from the root). It lists which video models
+a requirements-routed shot can land on, per tier: `reach: 'automatic'` (the router may pick
+it unnamed) or `'explicit'` (only when named). Apps that price video check their price list
+against it. Platform doc: `whizai-platform/docs/api/video-routes.md`.
+
 ## Text generation and image description (gateway)
 
 Wire types for the api-gateway's synchronous `POST /v1/generate/text` and

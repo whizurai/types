@@ -14,6 +14,9 @@ export * from './inference';
 // Gateway inference (POST /v1/generate/text, POST /v1/images/describe)
 export * from './gateway-inference';
 
+// Video route table (GET /v1/model-router/video-routes)
+export * from './video-routes';
+
 // Capability types
 export * as Capabilities from './capabilities';
 export * from './capabilities/contextual-rerank';
