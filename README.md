@@ -90,6 +90,17 @@ other engine option). The platform refuses an option the engine does not take
 `referenceTextSha256` for the reference the worker actually used (`null` when
 none; never `null` for `qwen3-tts`).
 
+## Image generation
+
+`@whizurai/types/capabilities` exports the `image:generate@v4` input
+(`IMAGE_GENERATE`, `ImageGenerateInput`, `ImageGenerateReference`). v4 adds an
+optional reference image: one of `referenceImageUrl`, `referenceImageArtifactId`
+or `referenceImageBase64` + `referenceImageContentType`, with `referenceStrength`
+(0.05-0.95). It is honoured only where the app's images run on the local fleet,
+where the render starts from it (img2img); anywhere else it is refused, never
+ignored. The image artifact's `metadata.reference` reports what the render
+started from (`{ sha256, strength }`, or `null`).
+
 ## Documentation
 
 See [Whizurai Documentation](https://github.com/whizurai/docs) for full API reference.
