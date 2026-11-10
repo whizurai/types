@@ -16,6 +16,16 @@ import { SocialScrapePlatform, SocialScrapeJobStatus } from '@whizurai/types';
 const platform: SocialScrapePlatform = SocialScrapePlatform.TIKTOK;
 ```
 
+## Outcome runs
+
+Running a published outcome by slug: `RunOutcomeRequest` / `RunOutcomeResponse`
+(`POST /v1/outcomes/{slug}/runs`, 202 new or 200 idempotent replay), `OutcomeRun`
+(`GET /v1/outcomes/runs/{id}`), `OutcomeRunAsset` (`GET /v1/outcomes/runs/{id}/assets`)
+and `ListOutcomeRunsResponse` (`GET /v1/outcomes/{slug}/runs`), in `@whizurai/types/outcomes`
+(also re-exported from the root). Poll until the status is in `TERMINAL_OUTCOME_RUN_STATUSES`
+(`SUCCEEDED`, `FAILED`, `CANCELLED`). Errors are `OutcomeErrorResponse`. Platform doc:
+`whizai-platform/docs/outcome-launch.md`.
+
 ## Video route table
 
 `GET /v1/model-router/video-routes` returns a `VideoRouteTable`

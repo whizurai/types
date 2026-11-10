@@ -17,6 +17,9 @@ export * from './gateway-inference';
 // Video route table (GET /v1/model-router/video-routes)
 export * from './video-routes';
 
+// Outcome runs (POST /v1/outcomes/{slug}/runs, GET /v1/outcomes/runs/{id}[/assets], GET /v1/outcomes/{slug}/runs)
+export * from './outcomes';
+
 // Capability types
 export * as Capabilities from './capabilities';
 export * from './capabilities/contextual-rerank';
