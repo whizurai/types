@@ -1,6 +1,6 @@
 {
   "name": "@whizurai/types",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "TypeScript type definitions for Whizurai Platform APIs",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -24,6 +24,11 @@
       "types": "./dist/video-routes.d.ts",
       "import": "./dist/video-routes.js",
       "require": "./dist/video-routes.js"
+    },
+    "./outcomes": {
+      "types": "./dist/outcomes.d.ts",
+      "import": "./dist/outcomes.js",
+      "require": "./dist/outcomes.js"
     },
     "./capabilities": {
       "types": "./dist/capabilities/index.d.ts",
