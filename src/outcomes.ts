@@ -24,7 +24,12 @@ export const TERMINAL_OUTCOME_RUN_STATUSES: readonly OutcomeRunStatus[] = [
 export interface RunOutcomeRequest {
   /** Keyed by the outcome's unlocked `fieldKey`s. */
   inputs: Record<string, unknown>;
-  /** Defaults to the API key's app. */
+  /**
+   * The app the run belongs to (id or public appId); it decides per-app policy such as the
+   * image provider pin. An app-bound key always runs as its own app (another one: 403
+   * APP_MISMATCH); a named app must be the caller's (else 404 APP_NOT_FOUND). Defaults to the
+   * API key's app.
+   */
   appId?: string;
   /** Variant slug; omitted runs the default variant. */
   variant?: string;
@@ -130,7 +135,9 @@ export type RunOutcomeErrorCode =
   | 'INVALID_VARIANT' // 400
   | 'UNAUTHENTICATED' // 401
   | 'INSUFFICIENT_BALANCE' // 402, details.purchase
+  | 'APP_MISMATCH' // 403, an app-bound API key named a different appId
   | 'OUTCOME_NOT_FOUND' // 404
+  | 'APP_NOT_FOUND' // 404, appId unknown or not the caller's
   | 'BILLING_NOT_PROVISIONED' // 409
   | 'IDEMPOTENCY_CONFLICT' // 409
   | 'INTERNAL_ERROR'; // 500
