@@ -26,6 +26,15 @@ and `ListOutcomeRunsResponse` (`GET /v1/outcomes/{slug}/runs`), in `@whizurai/ty
 (`SUCCEEDED`, `FAILED`, `CANCELLED`). Errors are `OutcomeErrorResponse`. Platform doc:
 `whizai-platform/docs/outcome-launch.md`.
 
+Interactive item runs (an outcome that runs as independent item invocations, started with
+`executionPolicy: 'review'` or `'automatic'`; `OutcomeRun.interactive` is true): read
+`InteractiveWorkspace` (`GET /v1/outcomes/runs/{id}/workspace`), send one
+`InteractiveCommandRequest` (`POST /v1/outcomes/runs/{id}/commands`; `InteractiveCommand` is the
+`action` union, `InteractiveCommandResponse` carries the result and the refreshed workspace), inspect
+one attempt with `InteractiveInvocationDetail` (`GET …/invocations/{invocationId}`) and read the trail
+with `OutcomeRunEventsResponse` (`GET …/events`). Platform doc:
+`whizai-platform/docs/interactive-outcome-runs.md`.
+
 ## Video route table
 
 `GET /v1/model-router/video-routes` returns a `VideoRouteTable`
