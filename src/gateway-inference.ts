@@ -29,8 +29,15 @@ export type PriorityClass = 'interactive' | 'production' | 'batch' | 'backfill';
  * Whether a request may leave the local fleet. `fleet-required` fails with
  * 429/503 when there is no fleet capacity instead of answering from a hosted
  * model.
+ *
+ * `fleet-then-hosted` runs on the fleet as `fleet-required`. After a fleet
+ * decline, an app opted in on WhizAI's side (model-router
+ * `HOSTED_TEXT_FALLBACK_BY_APP`) may have an `interactive` text request
+ * answered by a hosted model; `execution.execution` is then `'hosted'`. For any
+ * other app or class it is exactly `fleet-required`. It is also the one policy
+ * an unnamed-model `/v1/generate/text` request keeps.
  */
-export type ExecutionPolicy = 'fleet-required' | 'fleet-preferred' | 'fleet-disabled';
+export type ExecutionPolicy = 'fleet-required' | 'fleet-preferred' | 'fleet-disabled' | 'fleet-then-hosted';
 
 /**
  * Thinking control the gateway accepts. `none` turns reasoning off on a
@@ -74,9 +81,24 @@ export interface GenerateTextRequest {
  * tier from its absence.
  */
 export interface GenerateTextExecution {
-  execution?: 'fleet' | 'direct' | string;
+  execution?: 'fleet' | 'direct' | 'hosted' | string;
   runtime?: string;
   fleet_job_id?: string;
+  /** Hosted answers (`fleet-then-hosted`): the provider that served it, e.g. `openai`, `gemini`. */
+  provider?: string;
+  /** Hosted answers: the model id the provider reported. */
+  served_model?: string;
+  /** Hosted answers: why the fleet did not answer (`no_worker_claimed`, `caller_deadline_exceeded`, ...). */
+  fleet_declined_reason?: string;
+  /** Hosted answers: every hosted target tried, in order, and what it did. */
+  hosted_fallback?: {
+    taken: boolean;
+    answered?: boolean;
+    reason?: string;
+    attempts?: Array<{ target: string; outcome: string; ms?: number; [key: string]: unknown }>;
+  };
+  /** Hosted answers: list-price estimate in USD from reported tokens; null when unknown (never 0). */
+  cost_usd?: number | null;
   [key: string]: unknown;
 }
 
