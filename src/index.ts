@@ -26,3 +26,6 @@ export * from './capabilities/contextual-rerank';
 
 // Canonical capability/workflow run listing (GET /v1/workflow-runs)
 export * from './runs';
+
+// Live run events (GET /v1/capabilities/capability-runs/{runId}/events)
+export * from './run-events';
