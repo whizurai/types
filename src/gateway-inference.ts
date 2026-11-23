@@ -38,8 +38,17 @@ export type PriorityClass = 'interactive' | 'production' | 'batch' | 'backfill';
  * its own opt-in (`HOSTED_VISION_FALLBACK_BY_APP`). For any other app or class
  * it is exactly `fleet-required`. It is also the one policy
  * an unnamed-model `/v1/generate/text` request keeps.
+ *
+ * `hosted-first` is the reverse order under the same opt-in: the app's hosted
+ * chain first (up to half the deadline), the fleet as `fleet-required` only if
+ * it does not answer. Not eligible: exactly `fleet-required`.
  */
-export type ExecutionPolicy = 'fleet-required' | 'fleet-preferred' | 'fleet-disabled' | 'fleet-then-hosted';
+export type ExecutionPolicy =
+  | 'fleet-required'
+  | 'fleet-preferred'
+  | 'fleet-disabled'
+  | 'fleet-then-hosted'
+  | 'hosted-first';
 
 /**
  * Thinking control the gateway accepts. `none` turns reasoning off on a
