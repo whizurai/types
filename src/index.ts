@@ -23,3 +23,6 @@ export * from './outcomes';
 // Capability types
 export * as Capabilities from './capabilities';
 export * from './capabilities/contextual-rerank';
+
+// Canonical capability/workflow run listing (GET /v1/workflow-runs)
+export * from './runs';
