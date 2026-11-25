@@ -12,3 +12,4 @@ export * from './image-segment';
 export * from './video-multi-shot';
 export * from './speech-synthesize';
 export * from './image-generate';
+export * from './image-to-3d-model';
