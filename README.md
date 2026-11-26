@@ -43,6 +43,14 @@ a requirements-routed shot can land on, per tier: `reach: 'automatic'` (the rout
 it unnamed) or `'explicit'` (only when named). Apps that price video check their price list
 against it. Platform doc: `whizai-platform/docs/api/video-routes.md`.
 
+## Model catalogue
+
+`GET /v1/model-router/catalog` (optional `?operation=image_generate|image_edit`) returns a
+`ModelCatalog` (`@whizurai/types/model-catalog`, also re-exported from the root): per operation,
+its `default` and every model a caller may pass as `model`, each with `lifecycle`, `reach`
+(`automatic` may be the default, `explicit` runs only when named), `quality` and a dated
+`price`. Retired models are absent. Platform doc: `whizai-platform/docs/model-catalog.md`.
+
 ## Text generation and image description (gateway)
 
 Wire types for the api-gateway's synchronous `POST /v1/generate/text` and
